@@ -1,5 +1,5 @@
 {
-  "name": "Copy of Sample Demand Tracker",
+  "name": "NPI樣品統計",
   "description": "A web application for tracking sample demand statistics based on region, series, model, and combined sample plan categories.",
   "requestFramePermissions": []
 }
