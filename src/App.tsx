@@ -1412,19 +1412,19 @@ export default function App() {
                 <span className="text-xs font-mono opacity-60">AGGREGATED STATISTICS</span>
               </div>
 
-              <div className="overflow-x-auto max-h-[70vh] overflow-y-auto">
-                <table className="w-full text-xs border-collapse">
-                  <thead className="sticky top-0 z-10">
+              <div className="overflow-auto max-h-[calc(100vh-350px)] relative border-t border-stone-100">
+                <table className="w-full text-xs border-separate border-spacing-0 min-w-max">
+                  <thead className="sticky top-0 z-30">
                     <tr className="bg-stone-100 text-stone-600">
-                      <th className="p-2 border border-stone-200 sticky left-0 bg-stone-100 z-20">Region</th>
-                      <th className="p-2 border border-stone-200 sticky left-[60px] bg-stone-100 z-20">Series</th>
-                      <th className="p-2 border border-stone-200 sticky left-[120px] bg-stone-100 z-20">Model</th>
-                      <th className="p-2 border border-stone-200 sticky left-[220px] bg-stone-100 z-20">Stage</th>
-                      <th className="p-2 border border-stone-200 sticky left-[280px] bg-stone-100 z-20">Item</th>
+                      <th className="p-3 border-b border-r border-stone-200 sticky left-0 bg-stone-100 z-40 min-w-[70px]">Region</th>
+                      <th className="p-3 border-b border-r border-stone-200 sticky left-[70px] bg-stone-100 z-40 min-w-[80px]">Series</th>
+                      <th className="p-3 border-b border-r border-stone-200 sticky left-[150px] bg-stone-100 z-40 min-w-[150px] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">Model</th>
+                      <th className="p-3 border-b border-r border-stone-200 bg-stone-100 min-w-[80px]">Stage</th>
+                      <th className="p-3 border-b border-r border-stone-200 bg-stone-100 min-w-[100px]">Item</th>
                       {COMBINATIONS.map((comb, i) => {
                         const label = getCombinationLabel(comb);
                         return (
-                          <th key={i} className="p-2 border border-stone-200 min-w-[140px] text-[10px] leading-tight font-bold bg-stone-100">
+                          <th key={i} className="p-3 border-b border-r border-stone-200 min-w-[140px] text-[10px] leading-tight font-bold bg-stone-100">
                             <div className="text-stone-400 mb-1">{comb.startsWith('OBM') ? 'OBM' : 'ODM'}</div>
                             {label.split(' + ').map((part, idx) => (
                               <div key={idx}>{part}</div>
@@ -1432,34 +1432,34 @@ export default function App() {
                           </th>
                         );
                       })}
-                      {isAdmin && <th className="p-2 border border-stone-200 bg-stone-100">Actions</th>}
+                      {isAdmin && <th className="p-3 border-b border-stone-200 bg-stone-100 sticky right-0 z-40 shadow-[-2px_0_5px_-2px_rgba(0,0,0,0.1)]">Actions</th>}
                     </tr>
                   </thead>
                   <tbody>
                     {uniqueRows.map((row) => (
-                      <tr key={row.key} className="hover:bg-stone-50 transition-colors">
-                        <td className="p-2 border border-stone-200 font-medium sticky left-0 bg-white z-10">{row.region}</td>
-                        <td className="p-2 border border-stone-200 font-medium sticky left-[60px] bg-white z-10">{row.series}</td>
-                        <td className="p-2 border border-stone-200 font-bold text-stone-900 sticky left-[120px] bg-white z-10">{row.model}</td>
-                        <td className={`p-2 border border-stone-200 font-bold text-center sticky left-[220px] z-10 ${row.stage === 'EIT' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>
+                      <tr key={row.key} className="hover:bg-stone-50 transition-colors group">
+                        <td className="p-3 border-b border-r border-stone-200 font-medium sticky left-0 bg-white z-20 group-hover:bg-stone-50">{row.region}</td>
+                        <td className="p-3 border-b border-r border-stone-200 font-medium sticky left-[70px] bg-white z-20 group-hover:bg-stone-50">{row.series}</td>
+                        <td className="p-3 border-b border-r border-stone-200 font-bold text-stone-900 sticky left-[150px] bg-white z-20 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] group-hover:bg-stone-50">{row.model}</td>
+                        <td className={`p-3 border-b border-r border-stone-200 font-bold text-center ${row.stage === 'EIT' ? 'bg-emerald-50/30 text-emerald-700' : 'bg-amber-50/30 text-amber-700'}`}>
                           {row.stage}
                         </td>
-                        <td className="p-2 border border-stone-200 font-medium sticky left-[280px] bg-white z-10">{row.item}</td>
+                        <td className="p-3 border-b border-r border-stone-200 font-medium">{row.item}</td>
                         {COMBINATIONS.map((comb, i) => {
                           const val = dashboardData[row.key]?.[comb];
                           return (
-                            <td key={i} className={`p-2 border border-stone-200 text-center font-mono ${val ? 'bg-blue-50/50 font-bold text-blue-700' : 'text-stone-300'}`}>
+                            <td key={i} className={`p-3 border-b border-r border-stone-200 text-center font-mono ${val ? 'bg-blue-50/30 font-bold text-blue-700' : 'text-stone-300'}`}>
                               {val || '-'}
                             </td>
                           );
                         })}
                         {isAdmin && (
-                          <td className="p-2 border border-stone-200 text-right">
+                          <td className="p-3 border-b border-stone-200 text-right sticky right-0 bg-white z-20 shadow-[-2px_0_5px_-2px_rgba(0,0,0,0.1)] group-hover:bg-stone-50">
                             {dashboardRowToDelete === row.key ? (
                               <div className="flex flex-col items-end gap-1">
                                 <button 
                                   onClick={() => handleDeleteDashboardRow(row.key)}
-                                  className="text-rose-600 font-bold text-[10px] hover:underline"
+                                  className="text-rose-600 font-bold text-[10px] hover:underline whitespace-nowrap"
                                 >
                                   Confirm Clear
                                 </button>
@@ -1485,7 +1485,7 @@ export default function App() {
                     ))}
                     {uniqueRows.length === 0 && (
                       <tr>
-                        <td colSpan={COMBINATIONS.length + 5} className="p-12 text-center text-stone-400 italic bg-stone-50">
+                        <td colSpan={COMBINATIONS.length + 6} className="p-12 text-center text-stone-400 italic bg-stone-50">
                           No data available to display in the grid.
                         </td>
                       </tr>
